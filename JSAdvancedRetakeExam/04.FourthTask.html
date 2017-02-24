@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>List Items: Up / Down</title>
+    <style>button { margin: 3px 0 3px 8px }</style>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<div id="main"></div>
+<script>
+    function listBuilder(selector) {
+        //var div = document.getElementById(selector);
+        class listBuilder{
+            constructor(){
+              //this.div = div;
+            }
+            createNewList(){
+                $(`${selector}`).append(`<ul></ul>`);
+            }
+            addItem(text){
+                //$(`${selector} ul`).append(`<li></li>`).text(text);
+                let container = $(`${selector} ul`);
+                let fragment = document.createDocumentFragment();
+                //let html = $("<li></li>");
+                //html.text(text);
+                //html.append(`<button onclick="uP()">Up</button><button onclick="down()">Down</button>`);
+                let html = $('<li>').text(text).append($("<button>Up</button>").click(moveUp))
+                    .append($("<button>Down</button>").click(moveDown));
+                html.appendTo(fragment);
+                container.append(fragment);
+            }
+        }
+        function moveUp(){
+         console.log("ebi sa e ");
+            let row = $(this).parent();
+                row.insertBefore(row.prev());
+        }
+        function moveDown(){
+        console.log("mama ti dejba");
+            let row = $(this).parent();
+                row.insertAfter(row.next());
+        }
+        return new listBuilder;
+    }
+</script>
+<script>
+    $(function() {
+        let builder = listBuilder("#main");
+        builder.createNewList();
+        builder.addItem("Sofia");
+        builder.addItem("Varna");
+        builder.addItem("Sofia <new>");
+        builder.addItem("Pleven");
+    });
+</script>
+</body>
+</html>

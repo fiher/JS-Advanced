@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cards</title>
+    <style>
+        div.card {
+            display: inline-block; padding: 10px; margin: 10px;
+            width: 50px; height: 80px; background: #EEE;
+            border: 3px solid #DDD; border-radius: 5px;
+            font-size: 18pt; text-align: center; line-height: 75px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<div id="main"></div>
+<script>
+    function cardDeckBuilder(selector) {
+        // TODO: return the card builder
+        var div = document.getElementById(selector);
+        class cardBuilder{
+            constructor(){
+              this.div = div;
+            }
+            addCard(face,suit){
+                let actualSuit = suit;
+                switch(actualSuit){
+                    case 'D':
+                        actualSuit = '\u2666';
+                        break;
+                    case 'S':
+                        actualSuit = '\u2660';
+                        break;
+                    case 'H':
+                        actualSuit = '\u2665';
+                        break;
+                    case 'C':
+                        actualSuit = '\u2663';
+                        break;
+                }
+                let container = $(selector);
+                let fragment = document.createDocumentFragment();
+
+                let html = $("<div></div>");
+                html.addClass("card");
+                //TODO: html.click(function(){});
+                html.text(`${face}${actualSuit}`);
+                html.appendTo(fragment);
+                container.append(fragment);
+            }
+            reverseCards(ev){
+                var clickEvent = document.createEvent('MouseEvents');
+                clickEvent.initEvent('click', true, true);
+            console.log("opa");
+            this.ev = ev;
+            $('#div').on('click','option',function(){
+                let option = $(this.ev);
+                option.attr('selected','true');
+            });
+            let reverse = $('#div card');
+            let result = reverse.toArray();
+            result.reverse();
+            return result;
+        }
+        }
+
+        return new cardBuilder();
+
+    }
+</script>
+<script>
+    $(function() {
+        let builder = cardDeckBuilder("#main");
+        builder.addCard("10", "D");
+        builder.addCard("K", "S");
+        builder.addCard("Q", "H");
+        builder.addCard("4", "C");
+        $('#towns').on('click','option',function(){
+            let option = $(this);
+            option.attr('selected','true');
+        });
+
+    });
+</script>
+</body>
+</html>
